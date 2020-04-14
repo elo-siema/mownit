@@ -1,0 +1,3 @@
+set output "zad2.png"
+set terminal png
+plot "zad2f.txt" title 'single' with lines, "zad2d.txt" title 'double' with lines

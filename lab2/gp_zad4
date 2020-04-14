@@ -1,0 +1,5 @@
+set output "zad4.png"
+set terminal png
+set arrow from 4,3,1.2 to 4, 3, 1
+show arrow
+splot "dane2.dat" with lines

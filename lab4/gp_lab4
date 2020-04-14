@@ -1,0 +1,15 @@
+set output "f1.png"
+set terminal png
+set title "Średni błąd względny - x^2"
+set logscale y
+set format y "%e"
+set grid
+plot "f1.txt" using 1:5 title 'Błąd względny' with lines
+
+set output "f2.png"
+set terminal png
+set title "Średni błąd względny - 1/sqrt(x)"
+set logscale y
+set format y "%e"
+set grid
+plot "f2.txt" using 1:5 title 'Błąd względny' with lines

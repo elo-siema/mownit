@@ -1,0 +1,17 @@
+set output "images/zad1fun1ord{{ORDER}}.png"
+set terminal png
+set title "y = exp(x**2), stopień {{ORDER}}"
+plot "output/fun1ord{{ORDER}}.txt" using 0:2 title 'Function' with lines, \
+ '' using 0:3 title 'Approximation' with lines
+
+ set output "images/zad1fun2ord{{ORDER}}.png"
+set terminal png
+set title "y = abs(x+x**3), stopień {{ORDER}}"
+plot "output/fun2ord{{ORDER}}.txt" using 0:2 title 'Function' with lines, \
+ '' using 0:3 title 'Approximation' with lines
+
+ set output "images/zad1fun3ord{{ORDER}}.png"
+set terminal png
+set title "y = sign(x), stopień {{ORDER}}"
+plot "output/fun3ord{{ORDER}}.txt" using 0:2 title 'Function' with lines, \
+ '' using 0:3 title 'Approximation' with lines

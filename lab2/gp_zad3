@@ -1,0 +1,4 @@
+set output "zad3.png"
+set terminal png
+set logscale x 
+plot "dane1.dat" with lines

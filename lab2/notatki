@@ -1,0 +1,2 @@
+sort -k3 dane2.dat -g, daje maksimum
+4 3 1

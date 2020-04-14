@@ -1,0 +1,6 @@
+set output "zad2.png"
+set terminal png
+plot "inter_cspline.txt" title 'cspline' with lines, \
+     "inter_polynomial.txt" title 'polynomial' with lines, \
+     "inter_steffen.txt" title 'steffen' with lines, \
+     "wartosci.txt" title 'wartosci'

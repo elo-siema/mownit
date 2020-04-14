@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "gsl_spline.h": "c",
+        "gsl_fit.h": "c",
+        "stdio.h": "c"
+    }
+}

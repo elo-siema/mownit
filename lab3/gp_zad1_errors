@@ -1,0 +1,6 @@
+set output "zad1_errors.png"
+set terminal png
+set title "Średni błąd względny"
+plot "zad1_errors.txt" using 0:2 title 'exp((**2)' with lines, \
+ '' using 0:3 title 'abs(x+x**3)' with lines, \
+ '' using 0:4 title 'sign(x)' with lines

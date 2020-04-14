@@ -1,0 +1,19 @@
+set output "zad5.png"
+set terminal png font "Script, 8"
+set grid
+set xrange [-3:3]
+set key left top box 3 Left
+set bmargin 4.1
+
+set title "Wykres testowy" 
+set ylabel "Amplituda" 
+set label at -3.4,-5 "-0.365088, 4.84084" 
+
+set style line 1 lt rgb "red" lw 2 pt 1
+set style line 2 lt rgb "green" lw 2 pt 1
+set style line 3 lt rgb "blue" lw 1 pt 1
+
+plot "fun1.txt" title 'Dane z pliku fun1.txt' with errorbars ls 1, \
+     sin(x**5) title 'funkcja2: sinus(x^5)' with lines ls 2, \
+     2*cos(x*sin(x)) title 'funkcja1: 2*cos(x*sin(x))' with boxes ls 3, \
+     3*sin(x) title 'funkcja3: 3*sin(x)' with lines ls 1

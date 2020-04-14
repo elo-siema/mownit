@@ -1,0 +1,4 @@
+set output "zad1.png"
+set terminal png
+plot "inter_polynomial.txt" title 'polynomial' with lines, \
+     "wartosci.txt" title 'wartosci'
