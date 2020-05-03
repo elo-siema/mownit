@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.Rmd": "markdown",
+        "gsl_spline.h": "c",
+        "gsl_fit.h": "c",
+        "stdio.h": "c",
+        "demo_fn.h": "c"
+    }
+}
