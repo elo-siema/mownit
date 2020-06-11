@@ -10,7 +10,7 @@
 #include <gsl/gsl_fit.h>
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_linalg.h>
-#include<gsl/gsl_blas.h>
+#include <gsl/gsl_blas.h>
 
 double* generate_matrix(int n) {
   double* matrix = (double*)malloc(n*n*sizeof(double));
@@ -86,30 +86,11 @@ int print_vector(const gsl_vector *v){
 }
 
 int verify_correctness(int n, gsl_matrix *m, gsl_vector*b, gsl_vector *x) {
-  /*
-  int succeeded = 1;
-  for(int i = 0; i < n; i++) {
-    double result = 0;
-    for(int j=0; j< n; j++) {
-      result += gsl_vector_get(x, i)*gsl_matrix_get(m,i,j);
-    }
-    double expected = gsl_vector_get(b, i);
-    printf("ex: %g, act: %g\n", expected, result);
-    if(result != expected) succeeded = 0;
-  }*/
-  
   
   gsl_vector *y = gsl_vector_alloc(n); 
   int err = gsl_blas_dgemv( CblasNoTrans, 1.0, m, x, 1.0, y );
 
-  //gsl_matrix_fprintf(stdout, m, "%g");
-
-  //printf("Y:\n");
-  //print_vector(y);
-  //printf("B:\n");
-  //print_vector(b);
   return compare_vectors(y, b);
-  //return succeeded;
 }
 
 double decomp(gsl_matrix *A, gsl_permutation* p, int *signum)

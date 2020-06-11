@@ -1,18 +1,110 @@
 # MOwNiT Lab6 - sprawozdanie
 ### Autor: Michał Flak 
 
-## Zadanie 1
-
-### Polecenie
-```
-Uruchomić program root_finding.tgz
-
-  *  Umieć odpowiedzieć na pytanie, co on robi.
-  *  Narysować (np. za pomocą gnuplota ) wykres funkcji, której miejsc zerowych szukamy. 
+## Polecenie
 ```
 
-### Rozwiązanie
-Program szuka miejsca zerowego funkcji `y=x^2-5` metodą bisekcji w dziedzinie [0, 5]. Znajduje je w x=2.2357178 po 12 iteracjach. Wykres przybliżony do [0, 2.5]:
+    Korzystając z przykładu napisz program, który:
+
+1.      Jako parametr pobiera rozmiar układu równań n
+
+2.      Generuje macierz układu A(nxn) i wektor wyrazów wolnych b(n)
+
+3.      Rozwiązuje układ równań
+
+4.      Sprawdza poprawność rozwiązania (tj., czy Ax=b)
+
+5.      Mierzy czas dekompozycji macierzy - do mierzenia czasu można skorzystać z przykładowego programu dokonującego pomiaru czasu procesora spędzonego w danym fragmencie programu.
+
+6.      Mierzy czas rozwiązywania układu równań
+
+·  Zadanie domowe: Narysuj wykres zależności czasu dekompozycji i czasu rozwiązywania układu od rozmiaru układu równań. Wykonaj pomiary dla 10 wartości z przedziału od 10 do 1000.
+```
+
+## Rozwiązanie
+Analogicznie jak w przykładzie tworzymy macierz, wektor i rozwiązujemy za pomocą GSL (tworzymy też kopię pierwotnej macierzy, bo dekompozycja modyfikuje nam pierwotne dane). Zapisujemy czas wykonania w zmiennych(metody generowania danych oraz mierzenia czasu do wglądu w listingu kodu na końcu sprawozdania):
+
+```c
+  double* a_data = generate_matrix(n);
+  double* a_copy = copyVector(a_data, n*n);
+
+  double* b_data = generate_vector(n);
+
+  gsl_matrix_view m
+    = gsl_matrix_view_array (a_data, n, n);
+  gsl_matrix_view m_copy
+    = gsl_matrix_view_array (a_copy, n, n);
+
+  gsl_vector_view b
+    = gsl_vector_view_array (b_data, n);
+
+  gsl_vector *x = gsl_vector_alloc (n);
+
+  int s;
+
+  gsl_permutation * p = gsl_permutation_alloc (n);
+
+  double decomptime = decomp (&m.matrix, p, &s);
+
+  double solvetime = solve (&m.matrix, p, &b.vector, x);
+```
+
+Poprawność rozwiązania sprawdzamy mnożąc pierwotną macierz przez wektor wynikowy za pomocą `gsl_blas_dgemv`. Porównujemy otrzymany wektor z pierwotnym wektorem `b` do epsilonu=0.005:
+
+```c
+int compare_vectors(gsl_vector*a, gsl_vector*b) {
+  if(a->size != b->size) return 0;
+
+  const double eps = 0.005; 
+
+  for(int i = 0; i < a->size; i++){
+    if(fabs(gsl_vector_get(a,i)-gsl_vector_get(b,i)) > eps) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+int verify_correctness(int n, gsl_matrix *m, gsl_vector*b, gsl_vector *x) {
+  
+  gsl_vector *y = gsl_vector_alloc(n); 
+  int err = gsl_blas_dgemv( CblasNoTrans, 1.0, m, x, 1.0, y );
+
+  return compare_vectors(y, b);
+}
+```
+
+Wypisujemy wynik na wyjście standardowe w formacie:
+```
+Size: 700, DTime: 0.10751800000000000, STime: 0.00103000000000000, Correct: 1
+```
+
+Następującym skryptem uruchamiamy program dla 10 wartości w przedziale [10,1000]:
+```bash
+rm wyniki.txt
+for c in {10, 100, 200, 400, 500, 600, 700, 800, 900, 1000}
+do
+    ./lab6 $c | tee -a wyniki.txt
+done
+
+```
+
+## Wyniki
+
+Zawartość `wyniki.txt`:
+
+```
+Size: 100, DTime: 0.00036000000000000, STime: 0.00003400000000000, Correct: 1
+Size: 200, DTime: 0.00272200000000000, STime: 0.00010400000000000, Correct: 1
+Size: 400, DTime: 0.02155200000000000, STime: 0.00038700000000000, Correct: 1
+Size: 500, DTime: 0.05089800000000000, STime: 0.00086500000000000, Correct: 1
+Size: 600, DTime: 0.07247099999999999, STime: 0.00106600000000000, Correct: 1
+Size: 700, DTime: 0.10751800000000000, STime: 0.00103000000000000, Correct: 1
+Size: 800, DTime: 0.16430400000000001, STime: 0.00128000000000000, Correct: 1
+Size: 900, DTime: 0.26297900000000002, STime: 0.00174800000000000, Correct: 1
+Size: 1000, DTime: 0.34624500000000002, STime: 0.00233800000000000, Correct: 1
+```
+
 
 ```{r}
 x <- seq(0,2.5,0.1)
