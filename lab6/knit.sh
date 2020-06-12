@@ -1,0 +1,1 @@
+pandoc -V geometry:margin=1in --highlight-style=tango  -f markdown-implicit_figures -o sprawozdanie.pdf sprawozdanie.md

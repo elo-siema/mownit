@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # MOwNiT Lab6 - sprawozdanie
 ### Autor: Michał Flak 
 
@@ -108,13 +113,15 @@ Size: 900, DTime: 0.26297900000000002, STime: 0.00174800000000000, Correct: 1
 Size: 1000, DTime: 0.34624500000000002, STime: 0.00233800000000000, Correct: 1
 ```
 
+![dekomp]
 
-```{r echo = FALSE}
-data <- read.table("wyniki_edited.txt", header=T)
-plot(data$Size, data$DTime, type="l", main="Czas dekompozycji", 
-     ylim=c(0, 0.4), xaxs="i", yaxs="i", col="blue", 
-     lwd=2, xlab="Matrix size", ylab="Time [s]")
-```
+![rozw]
+
+![porownanie]
+
+## Wnioski
+
+Widzimy, że czas obu operacji rośnie wraz z rozmiarem macierzy. Dekompozycja trwa znacznie dłużej niż rozwiązanie układu równań.
 
 ## Program
 
@@ -280,3 +287,7 @@ int main(int argc, char const *argv[])
 }
 
 ```
+
+[rozw]: rozw.png
+[dekomp]: dekomp.png
+[porownanie]: porownanie.png
