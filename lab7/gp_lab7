@@ -1,0 +1,39 @@
+set output "f1_hit_miss.png"
+set terminal png
+set datafile separator ","
+set title "Hit/miss Średni błąd względny - x^2"
+set logscale x
+set logscale y
+set grid
+plot "fun1.txt" using "n":"ehm" title 'Błąd względny' with lines
+
+set output "f2_hit_miss.png"
+set terminal png
+set datafile separator ","
+set title "Hit/miss Średni błąd względny - 1/sqrt(x)"
+set logscale y
+set logscale x
+set grid
+plot "fun2.txt" using "n":"ehm" title 'Błąd względny' with lines
+
+set output "f1_gsl.png"
+set terminal png
+set datafile separator ","
+set title "GSL Średni błąd względny - x^2"
+set logscale y
+set logscale x
+set grid
+plot "fun1.txt" using "n":"ep" title 'Plain' with lines, \
+     "fun1.txt" using "n":"em" title 'Miser' with lines, \
+     "fun1.txt" using "n":"ev" title 'Vegas' with lines
+
+set output "f2_gsl.png"
+set terminal png
+set datafile separator ","
+set title "GSL Średni błąd względny - 1/sqrt(x)"
+set logscale y
+set logscale x
+set grid
+plot "fun2.txt" using "n":"ep" title 'Plain' with lines, \
+     "fun2.txt" using "n":"em" title 'Miser' with lines, \
+     "fun2.txt" using "n":"ev" title 'Vegas' with lines
